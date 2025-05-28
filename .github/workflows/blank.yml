@@ -1,0 +1,65 @@
+name: CI
+on:
+  repository_dispatch:
+    types:
+      - webhook-1
+      - webhook-2
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: echo "RELEASE_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Install GitHub CLI
+        uses: sersoft-gmbh/setup-gh-cli-action@v2
+
+      - name: Delete existing release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release delete $RELEASE_DATE --yes || true
+
+      - name: Create new release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create $RELEASE_DATE -t "Release $RELEASE_DATE" -n "Automated release for $RELEASE_DATE"
+
+      - name: Download Artifacts
+        run: |
+          mkdir -p ./artifacts
+          wget -O ./artifacts/x64_md_no_v8.zip https://download.happygogo.site/x64_md_no_v8.zip
+          wget -O ./artifacts/x64_no_v8.zip https://download.happygogo.site/x64_no_v8.zip
+          wget -O ./artifacts/x64d_md_no_v8.zip https://download.happygogo.site/x64d_md_no_v8.zip
+          wget -O ./artifacts/x64d_no_v8.zip https://download.happygogo.site/x64d_no_v8.zip
+
+
+      - name: List Zipped Files
+        run: ls ./artifacts/*.zip
+
+      - name: Generate MD5 Checksums
+        run: |
+          > ./artifacts/filelist.txt  # 清空或创建 filelist.txt 文件
+          for file in ./artifacts/*.zip; do
+            # Calculate MD5 checksum
+            md5sum=$(md5sum "$file" | awk '{ print $1 }')
+            
+            # Write to filelist.txt
+            echo "$(basename "$file") | ${md5sum}" >> ./artifacts/filelist.txt
+          done
+
+      - name: Upload Artifacts to Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd ./artifacts
+          gh release upload $RELEASE_DATE ./*.zip
+          gh release upload $RELEASE_DATE ./filelist.txt
