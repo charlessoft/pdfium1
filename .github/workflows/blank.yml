@@ -42,6 +42,7 @@ jobs:
           wget -O ./artifacts/x64d_no_v8.zip https://download.happygogo.site/x64d_no_v8.zip
 
 
+
       - name: List Zipped Files
         run: ls ./artifacts/*.zip
 
