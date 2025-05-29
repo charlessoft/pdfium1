@@ -14,12 +14,12 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout
-        shell: cmd
+        shell: bash
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools
-          dir
-          set PATH=%cd%\depot_tools:%PATH%
-          set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+          ls
+          export PATH=${PWD}/depot_tools:$PATH
+          export DEPOT_TOOLS_WIN_TOOLCHAIN=0
           echo %PATH%
           gclient config --unmanaged https://pdfium.googlesource.com/pdfium.git
           gclient sync
