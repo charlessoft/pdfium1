@@ -36,10 +36,10 @@ jobs:
       - name: Download Artifacts
         run: |
           mkdir -p ./artifacts
-          wget -O ./artifacts/x64_md_no_v8.zip https://download.happygogo.site/x64_md_no_v8.zip
-          wget -O ./artifacts/x64_no_v8.zip https://download.happygogo.site/x64_no_v8.zip
-          wget -O ./artifacts/x64d_md_no_v8.zip https://download.happygogo.site/x64d_md_no_v8.zip
-          wget -O ./artifacts/x64d_no_v8.zip https://download.happygogo.site/x64d_no_v8.zip
+          wget -O ./artifacts/x64_rel_md_no_v8.zip https://download.happygogo.site/x64_rel_md_no_v8.zip
+          wget -O ./artifacts/x64_dbg_md_no_v8.zip https://download.happygogo.site/x64_dbg_md_no_v8.zip
+          wget -O ./artifacts/x64_rel_no_v8.zip https://download.happygogo.site/x64_rel_no_v8.zip
+          wget -O ./artifacts/x64_dbg_no_v8.zip https://download.happygogo.site/x64_dbg_no_v8.zip
 
 
 
