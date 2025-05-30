@@ -12,6 +12,14 @@ on:
 jobs:
   build:
     runs-on: windows-2019
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - configuration: 'Debug'
+            platform: 'x64d_md_no_v8'
+          - configuration: 'Release'
+            platform: 'x64_md_no_v8'
     steps:
       - name: Checkout
 
@@ -38,6 +46,15 @@ jobs:
           cd ../
           gclient sync
 
+          git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
+          mkdir pdfium/out
+          cp myutils/pdfium/package.sh pdfium/out
+          cp -r myutils/pdfium/md pdfium/out
+          mkdir pdfium/out/include
+          echo "111" >> pdfium/output/include/1.txt
+          
+
+          # is_debug=true
       - name: Set up GN args
         shell: bash
         run: |
@@ -48,8 +65,7 @@ jobs:
           clang_use_chrome_plugins=false
           pdf_is_standalone=true
           pdf_use_skia=false
-          pdf_use_skia_paths=false
-          is_debug=true
+          pdf_use_skia_paths=false\
           is_component_build=false
           pdf_is_complete_lib=true
           pdf_enable_xfa=false
@@ -57,6 +73,14 @@ jobs:
           target_cpu="x64"
           is_clang=false
           EOF
+          
+          if [ "${{ matrix.platform }}" == "x64d_md_no_v8" ]; then
+             echo "is_debug=true" >> out/x64d_md_no_v8/args.gn
+             cat out/x64d_md_no_v8/args.gn
+          else
+             echo "is_debug=false" >> out/x64_md_no_v8/args.gn
+             cat out/x64_md_no_v8/args.gn
+          fi
 
       - name: Run GN
         shell: bash
@@ -67,21 +91,22 @@ jobs:
           cd pdfium
           gn gen out/x64d_md_no_v8
           ls out/x64d_md_no_v8
-
-      - name: build pdfium
-        shell: cmd
-        run: |
+          
+      
+      # - name: build pdfium
+      #   shell: cmd
+      #   run: |
         
-          set PATH=%cd%\depot_tools;%PATH%
-          set DEPOT_TOOLS_WIN_TOOLCHAIN=0
-          set GYP_MSVS_VERSION=2019
-          set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
-          set DEPOT_TOOLS_UPDATE=0
-          set NINJA_SUMMARIZE_BUILD=1
-          cd pdfium
-          ninja -C out/x64d_md_no_v8 pdfium
+      #     set PATH=%cd%\depot_tools;%PATH%
+      #     set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+      #     set GYP_MSVS_VERSION=2019
+      #     set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
+      #     set DEPOT_TOOLS_UPDATE=0
+      #     set NINJA_SUMMARIZE_BUILD=1
+      #     cd pdfium
+      #     ninja -C out/x64d_md_no_v8 pdfium
 
-          dir out/x64d_md_no_v8/obj
+      #     dir out/x64d_md_no_v8/obj
         
 
           
