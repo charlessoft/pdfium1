@@ -37,6 +37,7 @@ jobs:
           gclient sync
 
       - name: Set up GN args
+        shell: bash
         run: |
           mkdir -p out/x64d_md_no_v8
           cat << EOF > out/x64d_md_no_v8/args.gn
