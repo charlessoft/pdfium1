@@ -59,8 +59,8 @@ jobs:
         shell: bash
         run: |
           cd pdfium
-          mkdir -p out/x64d_md_no_v8
-          cat << EOF > out/x64d_md_no_v8/args.gn
+          mkdir -p out/${{ matrix.platform }}
+          cat << EOF > out/${{ matrix.platform }}/args.gn
           use_goma=false
           clang_use_chrome_plugins=false
           pdf_is_standalone=true
@@ -75,11 +75,11 @@ jobs:
           EOF
           
           if [ "${{ matrix.platform }}" == "x64d_md_no_v8" ]; then
-             echo "is_debug=true" >> out/x64d_md_no_v8/args.gn
-             cat out/x64d_md_no_v8/args.gn
+             echo "is_debug=true" >> out/${{ matrix.platform }}/args.gn
+             cat out/${{ matrix.platform }}/args.gn
           else
-             echo "is_debug=false" >> out/x64_md_no_v8/args.gn
-             cat out/x64_md_no_v8/args.gn
+             echo "is_debug=false" >> out/${{ matrix.platform }}/args.gn
+             cat out/${{ matrix.platform }}/args.gn
           fi
 
       - name: Run GN
