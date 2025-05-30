@@ -52,8 +52,8 @@ jobs:
           is_debug=true
           is_component_build=false
           pdf_is_complete_lib=true
-          pdf_enable_xfa=true
-          pdf_enable_v8=true
+          pdf_enable_xfa=false
+          pdf_enable_v8=false
           target_cpu="x64"
           is_clang=false
           EOF
@@ -80,7 +80,8 @@ jobs:
           set NINJA_SUMMARIZE_BUILD=1
           cd pdfium
           ninja -C out/x64d_md_no_v8 pdfium
-          
+
+          dir out/x64d_md_no_v8/obj
         
 
           
