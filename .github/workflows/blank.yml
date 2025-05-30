@@ -27,18 +27,21 @@ jobs:
           git config --global core.fscache true
           git config --global core.preloadindex true
           git config --global depot-tools.allowGlobalGitConfig false
-          
-          gclient config --unmanaged https://pdfium.googlesource.com/pdfium.git
-          gclient sync
-          cd pdfium
-          git clean -dfx
-          git reset --hard 467e8dde57c687bb7ec9452fa2620f000cfe849a
-          cd ../
-          gclient sync
+
+          mkdir pdfium
+          echo "11" >pdfium/1.txt
+          # gclient config --unmanaged https://pdfium.googlesource.com/pdfium.git
+          # gclient sync
+          # cd pdfium
+          # git clean -dfx
+          # git reset --hard 467e8dde57c687bb7ec9452fa2620f000cfe849a
+          # cd ../
+          # gclient sync
 
       - name: Set up GN args
         shell: bash
         run: |
+          cd pdfium
           mkdir -p out/x64d_md_no_v8
           cat << EOF > out/x64d_md_no_v8/args.gn
           use_goma=false
@@ -58,6 +61,7 @@ jobs:
       - name: Run GN
         shell: bash
         run: |
+          ls 
           export PATH=${PWD}/depot_tools:$PATH
           export DEPOT_TOOLS_WIN_TOOLCHAIN=0
           gn gen out/x64d_md_no_v8
