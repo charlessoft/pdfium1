@@ -93,20 +93,20 @@ jobs:
           ls out/${{ matrix.platform }}
           
       
-      # - name: build pdfium
-      #   shell: cmd
-      #   run: |
+      - name: build pdfium
+        shell: cmd
+        run: |
         
-      #     set PATH=%cd%\depot_tools;%PATH%
-      #     set DEPOT_TOOLS_WIN_TOOLCHAIN=0
-      #     set GYP_MSVS_VERSION=2019
-      #     set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
-      #     set DEPOT_TOOLS_UPDATE=0
-      #     set NINJA_SUMMARIZE_BUILD=1
-      #     cd pdfium
-      #     ninja -C out/x64d_md_no_v8 pdfium
+          set PATH=%cd%\depot_tools;%PATH%
+          set DEPOT_TOOLS_WIN_TOOLCHAIN=0
+          set GYP_MSVS_VERSION=2019
+          set GYP_MSVS_OVERRIDE_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
+          set DEPOT_TOOLS_UPDATE=0
+          set NINJA_SUMMARIZE_BUILD=1
+          cd pdfium
+          ninja -C out/${{ matrix.platform }} pdfium
 
-      #     dir out/x64d_md_no_v8/obj
+          dir out/${{ matrix.platform }}/obj
         
 
           
