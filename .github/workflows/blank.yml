@@ -134,6 +134,7 @@ jobs:
           mkdir -p package
           mv ./include ./package/
           mv ${{ matrix.platform }} ./package/
+          ls ./package
           
           
       - name: Upload  artifact
@@ -141,7 +142,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform }}
-          path: cd pdfium/out/package
+          path: pdfium/out/package
         
           
   # create-release:
