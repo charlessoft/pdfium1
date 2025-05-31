@@ -127,8 +127,22 @@ jobs:
 
           dir out/${{ matrix.platform }}/obj
         
-
+      - name: Package  files
+        # if: matrix.platform == 'x64d_md_no_v8' 
+        run: |
+          cd pdfium/out
+          mkdir -p package
+          mv ./include ./package/
+          mv ${{ matrix.platform }} ./package/
           
+          
+      - name: Upload  artifact
+        # if: matrix.configuration == 'Debug' && matrix.platform == 'Win32'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}
+          path: cd pdfium/out/package
+        
           
   # create-release:
   #   runs-on: ubuntu-latest
