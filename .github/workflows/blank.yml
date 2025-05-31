@@ -137,7 +137,7 @@ jobs:
           ls ./package
           
           
-      - name: Upload  artifact
+      - name: Upload artifact
         # if: matrix.configuration == 'Debug' && matrix.platform == 'Win32'
         uses: actions/upload-artifact@v4
         with:
@@ -172,6 +172,9 @@ jobs:
         with:
           path: ./artifacts
           
+      - name: Download Artifacts
+        run: |
+          ls ./artifacts
       # - name: Download Artifacts
       #   run: |
       #     mkdir -p ./artifacts
