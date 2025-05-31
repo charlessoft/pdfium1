@@ -39,12 +39,25 @@ jobs:
           # mkdir pdfium
           # echo "11" >pdfium/1.txt
           gclient config --unmanaged https://pdfium.googlesource.com/pdfium.git
-          gclient sync
+
+          # 克隆仓库，只获取最新的提交历史
+          git clone --depth 1 https://pdfium.googlesource.com/pdfium.git
           cd pdfium
-          git clean -dfx
-          git reset --hard 467e8dde57c687bb7ec9452fa2620f000cfe849a
-          cd ../
+          
+          # 获取特定的提交
+          git fetch --depth=1 origin 467e8dde57c687bb7ec9452fa2620f000cfe849a
+          
+          # 检出特定的提交
+          git checkout 467e8dde57c687bb7ec9452fa2620f000cfe849a
+          cd ..
           gclient sync
+          
+          # gclient sync
+          # cd pdfium
+          # git clean -dfx
+          # git reset --hard 467e8dde57c687bb7ec9452fa2620f000cfe849a
+          # cd ../
+          # gclient sync
 
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
           mkdir pdfium/out
