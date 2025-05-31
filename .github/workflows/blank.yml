@@ -17,9 +17,9 @@ jobs:
       matrix:
         include:
           - configuration: 'Debug'
-            platform: 'x64d_md_no_v8'
+            platform: 'x64_dbg_md_no_v8'
           - configuration: 'Release'
-            platform: 'x64_md_no_v8'
+            platform: 'x64_rel_md_no_v8'
     steps:
       - name: Checkout
 
@@ -93,7 +93,7 @@ jobs:
           is_clang=false
           EOF
           
-          if [ "${{ matrix.platform }}" == "x64d_md_no_v8" ]; then
+          if [ "${{ matrix.platform }}" == "x64_dbg_md_no_v8" ]; then
              echo "is_debug=true" >> out/${{ matrix.platform }}/args.gn
              cat out/${{ matrix.platform }}/args.gn
           else
