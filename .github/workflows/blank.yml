@@ -62,7 +62,7 @@ jobs:
 
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
           mkdir pdfium/out
-          cp myutils/pdfium/package.sh pdfium/out
+          cp myutils/pdfium/*.sh pdfium/out
           cp -r myutils/pdfium/md pdfium/out
           mkdir pdfium/out/include
           # echo "111" >> pdfium/out/include/1.txt
