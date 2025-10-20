@@ -76,7 +76,7 @@ jobs:
           cd ./pdfium/out/md
           sh set_md.sh
           cd ../
-          sh pactch_core.sh
+          sh patch_core.sh
           sh copy_include.sh
           ls ./include
           ls .
