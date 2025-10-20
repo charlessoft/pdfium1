@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       fail-fast: false
       matrix:
@@ -63,6 +63,7 @@ jobs:
           mkdir pdfium/out
           cp myutils/pdfium/*.sh pdfium/out
           cp -r myutils/pdfium/md pdfium/out
+          cp -r myutils/pdfium/core pdfium/out
           mkdir pdfium/out/include
           # echo "111" >> pdfium/out/include/1.txt
 
@@ -70,10 +71,12 @@ jobs:
 
           cp -r myutils/pdfium/md ./pdfium/out
           cp -r myutils/pdfium/package.sh ./pdfium/out
+          
 
           cd ./pdfium/out/md
           sh set_md.sh
           cd ../
+          sh pactch_core.sh
           sh copy_include.sh
           ls ./include
           ls .
