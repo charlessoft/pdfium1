@@ -89,6 +89,7 @@ jobs:
           pdf_enable_v8=false
           target_cpu="x64"
           is_clang=true
+          use_custom_libcxx = false         # 关键：禁用 libc++，改用 MSVC STL
           EOF
           
           if [ "${{ matrix.platform }}" == "x64_dbg_md_no_v8" ]; then
