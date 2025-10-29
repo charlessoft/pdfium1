@@ -25,6 +25,7 @@ jobs:
 
         shell: bash
         run: |
+          sync --
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools
           ls
           export PATH=${PWD}/depot_tools:$PATH
@@ -45,38 +46,22 @@ jobs:
           gclient sync
           cd pdfium
           
-          # 获取特定的提交
-          #git fetch --depth=1 origin 467e8dde57c687bb7ec9452fa2620f000cfe849a
-          
-          # 检出特定的提交
-          #git checkout 467e8dde57c687bb7ec9452fa2620f000cfe849a
-          #cd ..
-          #gclient sync
-          
-          # gclient sync
-          # cd pdfium
-          # git clean -dfx
-          # git reset --hard 467e8dde57c687bb7ec9452fa2620f000cfe849a
-          # cd ../
-          # gclient sync
 
 
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
           mkdir pdfium/out
           cp myutils/pdfium/*.sh pdfium/out
-          cp -r myutils/pdfium/md pdfium/out
+          #cp -r myutils/pdfium/md pdfium/out
           cp -r myutils/pdfium/core pdfium/out
           mkdir pdfium/out/include
-          # echo "111" >> pdfium/out/include/1.txt
 
-          
-          cp -r myutils/pdfium/md ./pdfium/out
+
+         
           cp -r myutils/pdfium/package.sh ./pdfium/out
           
 
-          cd ./pdfium/out/md
-          sh set_md.sh
-          cd ../
+          cd ./pdfium/out
+          
           sh patch_core.sh
           sh copy_include.sh
           ls ./include
@@ -102,7 +87,7 @@ jobs:
           pdf_enable_xfa=false
           pdf_enable_v8=false
           target_cpu="x64"
-          is_clang=false
+          is_clang=true
           EOF
           
           if [ "${{ matrix.platform }}" == "x64_dbg_md_no_v8" ]; then
