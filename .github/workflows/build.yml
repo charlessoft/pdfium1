@@ -44,10 +44,10 @@ jobs:
           # 克隆仓库，只获取最新的提交历史
           #git clone --depth 1 https://pdfium.googlesource.com/pdfium.git
           gclient sync
-          cd pdfium
+          #cd pdfium
           
 
-
+        
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
           mkdir pdfium/out
           cp myutils/pdfium/*.sh pdfium/out
