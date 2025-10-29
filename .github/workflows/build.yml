@@ -61,7 +61,9 @@ jobs:
           cp -r myutils/pdfium/package.sh ./pdfium/out
           
 
-          cd ./pdfium/out
+          cd ./pdfium/out/md
+          sh set_md.sh
+          cd ../
           
           sh patch_core.sh
           sh copy_include.sh
