@@ -47,7 +47,9 @@ jobs:
           #git clone --depth 1 https://pdfium.googlesource.com/pdfium.git
           gclient sync
           #cd pdfium
-          
+          cd pdfium
+          git reset --hard d4c2dadd7
+          cd ..
 
         
           git clone https://oauth2:${{ secrets.GITEE_TOKEN  }}@gitee.com/charlesabc/myutils.git ./myutils
