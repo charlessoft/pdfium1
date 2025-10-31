@@ -233,5 +233,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd ./artifacts
-          gh release upload $RELEASE_DATE ./*.zip
-          gh release upload $RELEASE_DATE ./filelist.txt
+          gh release upload $RELEASE_DATE ./*.zip --clobber
+          gh release upload $RELEASE_DATE ./filelist.txt --clobber
