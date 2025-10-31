@@ -23,6 +23,12 @@ jobs:
           - configuration: 'Release'
             platform: 'x64_rel_md_no_v8'
     steps:
+      - name: List Windows SDKs
+        run: |
+          reg query "HKLM\SOFTWARE\Microsoft\Windows Kits\Installed Roots"
+          dir "C:\Program Files (x86)\Windows Kits\10"
+          Get-ChildItem "C:\Program Files (x86)\Windows Kits\10\Include" | Select-Object Name
+    
       - name: Checkout
 
         shell: bash
