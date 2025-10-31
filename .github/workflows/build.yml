@@ -167,6 +167,9 @@ jobs:
           find ./package -type f \( -name '*.obj' -o -name '*.pdb' -o -name '*.exe' -o -name '*.ninja' \) -print -delete
           echo "After cleanup:"
           find ./package -maxdepth 2 -type f | head -n 50
+
+          rm -fr ./package/${{ matrix.platform }}/include/third_partyrust-toolchain
+          rm -fr ./package/${{ matrix.platform }}/include/llvm-libc
           
       - name: Upload artifact
         # if: matrix.configuration == 'Debug' && matrix.platform == 'Win32'
