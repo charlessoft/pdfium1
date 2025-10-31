@@ -65,7 +65,7 @@ jobs:
           
 
           cd ./pdfium/out/md
-          #sh set_md.sh
+          sh set_md.sh
           cd ../
           
           sh patch_core.sh
