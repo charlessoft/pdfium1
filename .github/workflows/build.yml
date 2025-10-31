@@ -44,11 +44,21 @@ jobs:
           gclient config --unmanaged https://pdfium.googlesource.com/pdfium.git
 
           # 克隆仓库，只获取最新的提交历史
-          #git clone --depth 1 https://pdfium.googlesource.com/pdfium.git
+          git clone --depth 1 https://pdfium.googlesource.com/pdfium.git
+
+          # 获取特定的提交
+          git fetch --depth=1 origin d4c2dadd7
+          
+          # 检出特定的提交
+          git checkout d4c2dadd7
+          cd ..
           gclient sync
+
+          
+          #gclient sync
           #cd pdfium
           cd pdfium
-          git reset --hard d4c2dadd7
+          #git reset --hard d4c2dadd7
           cd ..
 
         
@@ -138,13 +148,18 @@ jobs:
         
       - name: Package  files
         # if: matrix.platform == 'x64d_md_no_v8' 
+        shell: bash
         run: |
           cd pdfium/out
           mkdir -p package
           mv ./include ./package/
           mv ${{ matrix.platform }} ./package/
           ls ./package
-          
+
+          # 删除所有 .obj
+          find ./package -type f -name '*.obj' -print -delete
+          echo "After cleanup:"
+          find ./package -maxdepth 2 -type f | head -n 50
           
       - name: Upload artifact
         # if: matrix.configuration == 'Debug' && matrix.platform == 'Win32'
