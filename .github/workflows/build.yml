@@ -97,10 +97,14 @@ jobs:
           
           if [ "${{ matrix.platform }}" == "x64_dbg_md_no_v8" ]; then
              echo "is_debug=true" >> out/${{ matrix.platform }}/args.gn
-             echo "enable_iterator_debugging = true" >> out/${{ matrix.platform }}/args.gn
+             echo "enable_iterator_debugging = false" >> out/${{ matrix.platform }}/args.gn
+             echo "pdf_use_partition_alloc = false" >> out/${{ matrix.platform }}/args.gn
+             echo "use_allocator_shim = false" >> out/${{ matrix.platform }}/args.gn
              cat out/${{ matrix.platform }}/args.gn
           else
              echo "is_debug=false" >> out/${{ matrix.platform }}/args.gn
+             echo "pdf_use_partition_alloc = false" >> out/${{ matrix.platform }}/args.gn
+             echo "use_allocator_shim = false" >> out/${{ matrix.platform }}/args.gn
              cat out/${{ matrix.platform }}/args.gn
           fi
 
