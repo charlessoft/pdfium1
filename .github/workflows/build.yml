@@ -176,7 +176,7 @@ jobs:
           echo "After cleanup:"
           find ./package -maxdepth 2 -type f | head -n 50
 
-          rm -fr ./package/${{ matrix.platform }}/include/third_partyrust-toolchain
+          rm -fr ./package/${{ matrix.platform }}/include/third_party/rust-toolchain
           rm -fr ./package/${{ matrix.platform }}/include/llvm-libc
           
       - name: Upload artifact
